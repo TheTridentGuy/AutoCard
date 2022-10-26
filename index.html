@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--
+    AutoCard quickly design digital cards for any occasion.
+    index.html - Main page for AutoCard.
+    Copyright (C) 2022  Aiden Bohlander.
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+    -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoCard</title>
+    <style>
+        * {
+            font-family: sans-serif;
+        }
+        h1 {
+            text-align: center;
+            font-size: 10vmin;
+        }
+        p {
+            text-align: center;
+        }
+    </style>
+    <script>
+        function $(id){
+            return document.getElementById(id)
+        }
+
+        function textfill(elem, text, colors){
+            var colcount = 0;
+            for(var char of text){
+                $(elem).innerHTML += `<b style="color: ${colors[colcount]};">${char}</b>`;
+                if(char == " ") continue
+                colcount++;
+                if(colcount >= colors.length) colcount = 0;
+            }
+        }
+
+        function festivity(elem, colors, num) {
+            
+        }
+
+        window.onload = function(){
+            textfill("title", "AutoCard", ["red", "orange", "yellow", "green", "blue", "purple"]);
+            textfill("msg", "Quickly design digital cards for every occasion.", ["red", "orange", "yellow", "green", "blue", "purple"]);
+            setTimeout(function(){
+                festivity($("fest"), ["red", "orange", "yellow", "green", "blue", "purple"], 0);
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1 id="title"></h1>
+    <p id="msg"></p>
+    <hr id="fest">
+</body>
+</html>

@@ -1,6 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!--
+    AutoCard quickly design digital cards for any occaison.
+    card.html-JSON Parser for AutoCard.
+    Copyright (C) 2022  Aiden Bohlander.
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+    -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -83,33 +101,47 @@
 
         var fontsize = 0;
 
+        function loadcard(json){
+            obj = JSON.parse(unescape(json))
+            if(obj.msg.reveal.style == "flip"){
+                textfillflip("msg", obj.msg.text, obj.msg.colors);
+                setTimeout(function(){
+                    flipreveal($("msg"), obj.msg.reveal.delay, 0)
+                });
+            }else{
+                textfill("msg", obj.msg.text, obj.msg.colors);
+            }
+            if(obj.msg.confetti){
+                if(obj.msg.confetti.repeat == 0){
+                    setTimeout(function (){
+                        party.confetti($("msg"), {
+                            "shapes": obj.msg.confetti.shapes,
+                            "colors": obj.msg.confetti.colors,
+                            "count": obj.msg.confetti.count
+                        });
+                    }, obj.msg.confetti.after);
+                }else{
+                    setInterval(function (){
+                        party.confetti($("msg"), {
+                            "shapes": obj.msg.confetti.shapes,
+                            "colors": obj.msg.confetti.colors,
+                            "count": obj.msg.confetti.count
+                        });
+                    }, obj.msg.confetti.after);
+                }
+            }
+        }
 
         window.onload = function(){
-            textfillflip("msg", "Happy Birthday", ["red", "orange", "yellow", "green", "blue", "purple"]);
+            json = testjson;
+            loadcard(json);
             textfill("name", "Cedric", ["red", "orange", "yellow", "green", "blue", "purple"]);
-            setTimeout(
-                function(){
-                    flipreveal($("msg"));
-                },
-                50
-            );
             setTimeout(
                 function(){
                     slidereveal($("name"), 99, 30);
                 },
                 10
             );
-            setTimeout(
-                function(){
-                    party.confetti($("msg"), {
-                        "shapes": [
-                            "circle"
-                        ],
-                        "count": 800,
-                    });
-                },
-                1000
-            )
             setTimeout(function(){
                 setInterval(function(){
                     party.sparkles($("name"), {
@@ -155,15 +187,16 @@
             }
         }
 
-        function flipreveal(elem, num=0){
-            if(num >= elem.children.length) return
+        function flipreveal(elem, delay, num){
+            if(num >= elem.children.length) return;
+            console.log("flip iter")
             var sib = elem.children[num];
             sib.querySelector(".flip-card-inner").classList.add("flipped");
             setTimeout(
                 function(){
-                    flipreveal(elem, num+1);
+                    flipreveal(elem, delay, num+1);
                 },
-                50
+                delay
             );
         }
 

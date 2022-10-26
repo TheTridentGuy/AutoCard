@@ -1,9 +1,11 @@
-JSON.stringify(
+testjson = JSON.stringify(
     {
         "msg": {
             "font": "sans-serif",
-            "greet": "Happpy Birthday",
+            "text": "Happpy Birthday",
+            "colors": ["red", "orange", "yellow", "green", "blue", "purple"],
             "confetti": {
+                "shapes": ["circle"],
                 "colors": ["red", "orange", "yellow", "green", "blue", "purple"],
                 "count": 500,
                 "after": 1000,
@@ -11,8 +13,13 @@ JSON.stringify(
             },
             "reveal": {
                 "style": "flip",
-                "delay": 10,
+                "delay": 50,
                 "transform": 0.8
+            },
+            "sparkles": {
+                "delay": 1000,
+                "count": 100
+                
             }
         }
     }

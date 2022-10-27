@@ -35,6 +35,7 @@
             text-align: center;
         }
     </style>
+    <script src="party.min.js"></script>
     <script>
         function $(id){
             return document.getElementById(id)
@@ -51,7 +52,13 @@
         }
 
         function festivity(elem, colors, num) {
-            
+            if(num >= colors.length) num=0
+            party.confetti(elem);
+            elem.style.backgroundColor = colors[num];
+            if(num >= colors.length) num=0
+            setTimeout(function(){
+                festivity(elem, colors, num+1);
+            }, 1000);
         }
 
         window.onload = function(){
@@ -66,6 +73,6 @@
 <body>
     <h1 id="title"></h1>
     <p id="msg"></p>
-    <hr id="fest">
+    <hr id="fest" style="height: 5vmin; border: none;">
 </body>
 </html>

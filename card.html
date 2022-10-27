@@ -102,12 +102,17 @@
         var fontsize = 0;
 
         function loadcard(json){
-            obj = JSON.parse(unescape(json))
+            obj = JSON.parse(unescape(json));
             if(obj.msg.reveal.style == "flip"){
                 textfillflip("msg", obj.msg.text, obj.msg.colors);
                 setTimeout(function(){
-                    flipreveal($("msg"), obj.msg.reveal.delay, 0)
+                    flipreveal($("msg"), obj.msg.reveal.delay, 0);
                 });
+            }else if(obj.msg.reveal.style == "up"){
+                textfill("msg", obj.msg.text, obj.msg.colors);
+                setTimeout(function(){
+                    slidereveal($("msg"), 99, 45, obj.msg.delay);
+                }, obj.msg.reveal.delay);
             }else{
                 textfill("msg", obj.msg.text, obj.msg.colors);
             }
@@ -130,6 +135,21 @@
                     }, obj.msg.confetti.after);
                 }
             }
+            if(obj.msg.sparkles){
+                if(obj.msg.sparkles.repeat == 0){
+                    setTimeout(function(){
+                        party.sparkles($("msg"), {
+                            "count": obj.msg.sparkles.count
+                        });
+                    }, obj.msg.sparkles.delay);
+                }else{
+                    setInterval(function(){
+                        party.sparkles($("msg"), {
+                            "count": obj.msg.sparkles.count
+                        });
+                    }, obj.msg.sparkles.delay);
+                }
+            }
         }
 
         window.onload = function(){
@@ -138,7 +158,7 @@
             textfill("name", "Cedric", ["red", "orange", "yellow", "green", "blue", "purple"]);
             setTimeout(
                 function(){
-                    slidereveal($("name"), 99, 30);
+                    slidereveal($("name"), 99, 30, 10);
                 },
                 10
             );
@@ -149,18 +169,12 @@
                     });
                 }, 1000)
             }, 2000)
-            setTimeout(function(){
-                setInterval(function(){
-                    party.sparkles($("msg"), {
-                        "count": 50
-                    });
-                }, 500)
-            }, 2000)
         }
 
         function textfill(elem, text, colors){
             var colcount = 0;
             for(var char of text){
+                if(char == "\n"){$(elem).innerHTML += `<br>`; continue;}
                 $(elem).innerHTML += `<b style="color: ${colors[colcount]};">${char}</b>`;
                 if(char == " ") continue
                 colcount++;
@@ -200,14 +214,15 @@
             );
         }
 
-        function slidereveal(elem, num, thresh){
+        function slidereveal(elem, num, thresh, delay){
+            elem.style.position = "absolute";
             elem.style.top = num + "%";
             if(num<=thresh) return;
             setTimeout(
                 function(){
-                    slidereveal(elem, num-1, thresh);
+                    slidereveal(elem, num-1, thresh, delay);
                 },
-                10
+                delay
             )
         }
     </script>

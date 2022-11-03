@@ -24,16 +24,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Happy Birthday</title>
     <style>
-        * {
+        html {
+            background-color: black;
+        }
+        body {
             font-family: sans-serif;
         }
         #msg{
-            margin-top: 15%;
+            margin-top: 8%;
             display: block;
             margin-left: auto;
             margin-right: auto;
             display: block;
             text-align: center;
+            font-size: 12vmin;
+            width: 100%;
         }
         #name {
             margin-top: 15%;
@@ -50,9 +55,9 @@
         /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
         .flip-card {
             background-color: transparent;
-            font-size: 10vmin;
+            font-size: 12vmin;
             width: 10vmin;
-            height: 10vmin;
+            height: 12vmin;
             perspective: 1000px;
             display: inline-block;
         }
@@ -91,27 +96,46 @@
         .flipped {
             transform: rotateY(180deg);
         }
+        .icon svg, .icon img {
+            height: 1em;
+            width: 1em;
+            fill: currentColor;
+        }
+        .icon.baseline svg, .icon img {
+            top: .125em;
+            position: relative;
+        }
+        #fireworks {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+        }
     </style>
     <script src="party.min.js"></script>
     <script src="test.js"></script>
+    <script src="fireworks/index.umd.js"></script>
     <script>
         function $(id){
             return document.getElementById(id)
         }
 
+        var fireworks;
         var fontsize = 0;
 
         function loadcard(json){
             obj = JSON.parse(unescape(json));
+            $("msg").style.fontFamily = obj.msg.font;
             if(obj.msg.reveal.style == "flip"){
                 textfillflip("msg", obj.msg.text, obj.msg.colors);
                 setTimeout(function(){
                     flipreveal($("msg"), obj.msg.reveal.delay, 0);
                 });
-            }else if(obj.msg.reveal.style == "up"){
+            }else if(obj.msg.reveal.style == "slide"){
                 textfill("msg", obj.msg.text, obj.msg.colors);
                 setTimeout(function(){
-                    slidereveal($("msg"), 99, 45, obj.msg.delay);
+                    slidereveal($("msg"), 99, 5, obj.msg.delay);
                 }, obj.msg.reveal.delay);
             }else{
                 textfill("msg", obj.msg.text, obj.msg.colors);
@@ -155,21 +179,25 @@
         window.onload = function(){
             json = testjson;
             loadcard(json);
-            textfill("name", "Cedric", ["red", "orange", "yellow", "green", "blue", "purple"]);
+            textfill("name", "Kennedy!", ["red", "orange", "yellow", "green", "blue", "purple"]);
             setTimeout(
                 function(){
                     slidereveal($("name"), 99, 30, 10);
                 },
                 10
             );
-            setTimeout(function(){
+            /*setTimeout(function(){
                 setInterval(function(){
                     party.sparkles($("name"), {
-                        "count": 100
+                        "count": 50
                     });
                 }, 1000)
             }, 2000)
+            */
         }
+        setTimeout(function(){
+            launchfireworks();
+        }, 100);
 
         function textfill(elem, text, colors){
             var colcount = 0;
@@ -185,6 +213,7 @@
         function textfillflip(elem, text, colors){
             var colcount = 0;
             for(var char of text){
+                if(char == "\n"){$(elem).innerHTML += `<br>`; continue;}
                 $(elem).innerHTML += `
 <div class="flip-card">
   <div class="flip-card-inner">
@@ -205,7 +234,9 @@
             if(num >= elem.children.length) return;
             console.log("flip iter")
             var sib = elem.children[num];
-            sib.querySelector(".flip-card-inner").classList.add("flipped");
+            if(sib.querySelector(".flip-card-inner")){
+                sib.querySelector(".flip-card-inner").classList.add("flipped");
+            }
             setTimeout(
                 function(){
                     flipreveal(elem, delay, num+1);
@@ -225,10 +256,77 @@
                 delay
             )
         }
+
+        function launchfireworks(){
+            var container = $("fireworks");
+            fireworks = new Fireworks.Fireworks(container, {
+                rocketsPoint: {
+                    min: 30,
+                    max: 60
+                },
+                hue: {
+                    min: 0,
+                    max: 360
+                },
+                delay: {
+                    min: 100,
+                    max: 150
+                },
+                lineWidth: {
+                    explosion: {
+                    min: 1,
+                    max: 3
+                    },
+                    trace: {
+                    min: 1,
+                    max: 2
+                    }
+                },
+                lineStyle: 'round',
+                speed: 0.5,
+                acceleration: 1,
+                friction: 0.96,
+                gravity: 1,
+                particles: 20,
+                traceLength: 5,
+                flickering: 100,
+                opacity: 0.6,
+                explosion: 10,
+                intensity: 50,
+                traceSpeed: 20,
+                autoresize: true,
+                brightness: { 
+                    min: 50, 
+                    max: 80
+                },
+                decay: {
+                    min: 0.002,
+                    max: 0.006
+                },
+                mouse: { 
+                    click: true, 
+                    move: false, 
+                    max: 15 
+                },
+                boundaries: {
+                    visible: false,
+                    x: 50,
+                    y: 50,
+                    width: container.clientWidth,
+                    height: container.clientHeight 
+                },
+                sound: {
+                    enable: false,
+                }
+            });
+            fireworks.start();
+            window.resizeTo(window.width, window.height);
+        }
     </script>
 </head>
 <body id="body">
     <div id="msg"></div>
     <div id="name"></div>
 </body>
+<div id="fireworks"></div>
 </html>

@@ -234,13 +234,27 @@
 
             // Fireworks:
             if(obj.fireworks){
-                launchfireworks(obj.fireworks.decay, obj.fireworks.hues);
+                launchfireworks(obj.fireworks.decay, obj.fireworks.hues, obj.fireworks.delay);
             }
         }
 
+        function getParameterByName(name, url = window.location.href) {
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
         window.onload = function(){
-            json = testjson;
-            loadcard(json);
+            json = getParameterByName("json");
+            try{
+                loadcard(unescape(json));
+            }catch (e){
+                location.replace("error.html?error=" + e);
+            }
+            
         }
 
         function textfill(elem, text, colors){
@@ -301,7 +315,7 @@
             )
         }
 
-        function launchfireworks(decay, hues){
+        function launchfireworks(decay, hues, delay){
             var container = $("fireworks")
             var fireworks = new Fireworks.Fireworks(container, {
                 rocketsPoint: {
@@ -312,8 +326,8 @@
                     list: hues
                 },
                 delay: {
-                    min: 75,
-                    max: 100
+                    min: delay[0],
+                    max: delay[1]
                 },
                 lineWidth: {
                     explosion: {

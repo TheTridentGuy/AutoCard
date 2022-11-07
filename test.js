@@ -1,8 +1,13 @@
 testjson = JSON.stringify(
     {
+        "bg": "deepblue",
+        "fireworks": {
+            "decay": "long",
+            "hues": [[0, 0], [361, 361], [240, 240]]
+        },
         "msg": {
             "font": "'Courier New', Courier, monospace",
-            "text": "Happpy\nBirthday,",
+            "text": "Happpy 4th,",
             "colors": ["red", "orange", "yellow", "green", "blue", "purple"],
             "//confetti": {
                 "shapes": ["circle"],
@@ -23,7 +28,7 @@ testjson = JSON.stringify(
         },
         "name": {
             "font": "'Courier New', Courier, monospace",
-            "text": "Happpy\nBirthday,",
+            "text": "Aiden!",
             "colors": ["red", "orange", "yellow", "green", "blue", "purple"],
             "//confetti": {
                 "shapes": ["circle"],
@@ -34,7 +39,7 @@ testjson = JSON.stringify(
             },
             "reveal": {
                 "style": "slide",
-                "delay": 50
+                "delay": 10
             },
             "//sparkles": {
                 "delay": 800,

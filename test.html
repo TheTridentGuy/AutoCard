@@ -6,54 +6,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Test - Redirecting</title>
     <script>
+        /*
+          "//confetti": {
+                        "shapes": ["circle"],
+                        "colors": ["red", "orange", "yellow", "green", "blue", "purple"],
+                        "count": 500,
+                        "after": 1000,
+                        "repeat": 0
+                    },
+            
+                    "//sparkles": {
+                        "delay": 800,
+                        "count": 50,
+                        "repeat": 1
+                    }
+        */
         testjson = JSON.stringify(
             {
                 "bg": "black",
                 "fireworks": {
                     "delay": [75, 100],
                     "decay": "long",
-                    "hues": [[0, 0], [361, 361], [240, 240]]
+                    "hues": [[0, 360]]
                 },
                 "msg": {
                     "font": "'Courier New', Courier, monospace",
-                    "text": "Happpy 4th,",
+                    "text": "Happy\nBirthday",
                     "colors": ["red", "orange", "yellow", "green", "blue", "purple"],
-                    "//confetti": {
-                        "shapes": ["circle"],
-                        "colors": ["red", "orange", "yellow", "green", "blue", "purple"],
-                        "count": 500,
-                        "after": 1000,
-                        "repeat": 0
-                    },
                     "reveal": {
                         "style": "flip",
-                        "delay": 50
-                    },
-                    "//sparkles": {
-                        "delay": 800,
-                        "count": 50,
-                        "repeat": 1
+                        "delay": 80
                     }
                 },
                 "name": {
                     "font": "'Courier New', Courier, monospace",
-                    "text": "Aiden!",
+                    "text": "Kennedy!",
                     "colors": ["red", "orange", "yellow", "green", "blue", "purple"],
-                    "//confetti": {
-                        "shapes": ["circle"],
-                        "colors": ["red", "orange", "yellow", "green", "blue", "purple"],
-                        "count": 500,
-                        "after": 1000,
-                        "repeat": 0
-                    },
                     "reveal": {
                         "style": "slide",
                         "delay": 10
-                    },
-                    "//sparkles": {
-                        "delay": 800,
-                        "count": 50,
-                        "repeat": 1
                     }
                 }
             }

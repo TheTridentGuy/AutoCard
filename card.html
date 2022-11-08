@@ -22,7 +22,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday</title>
+    <title>Your Card</title>
     <style>
         html {
             background-color: black;
@@ -130,7 +130,13 @@
 
         function loadcard(json){
             obj = JSON.parse(unescape(json));
-            document.getElementsByTagName("html")[0].style.backgroundColor = obj.bg;
+
+            if(obj.bg){
+                document.getElementsByTagName("html")[0].style.backgroundColor = obj.bg;
+            }
+            if(obj.title){
+                document.getElementsByTagName("title")[0].innerText= obj.title;
+            }
 
             // For msg:
             $("msg").style.fontFamily = obj.msg.font;

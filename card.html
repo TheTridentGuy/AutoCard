@@ -312,7 +312,7 @@
         function textfillflip(elem, text, colors){
             var colcount = 0;
             for(var char of text){
-                if(char == "\n"){$(elem).innerHTML += `<br>`; continue;}
+                if(char == "\n" || char == "/n"){$(elem).innerHTML += `<br>`; continue;}
                 $(elem).innerHTML += `
 <div class="flip-card">
   <div class="flip-card-inner">

@@ -297,7 +297,7 @@
         }
 
         window.onload = function(){
-            json = getParameterByName("json");
+            var json = getParameterByName("json");
             try{
                 loadcard(unescape(json));
             }catch (e){

@@ -342,7 +342,6 @@
 
         function flipreveal(elem, delay, num){
             if(num >= elem.children.length) return;
-            console.log("flip iter")
             var sib = elem.children[num];
             if(sib.querySelector(".flip-card-inner")){
                 sib.querySelector(".flip-card-inner").classList.add("flipped");

@@ -292,17 +292,6 @@
             return url.searchParams.get("json");
         }
 
-        window.onload = function(){
-            var json = getParameterByName("json");
-            try{
-                loadcard(unescape(json));
-            }catch (e){
-                str = `${e}<br><br>&lt;${e.file}&gt; line: ${e.columnNumber}, row: ${e.rowNumber}`
-                location.replace("error.html?error=" + escape(str));
-            }
-            
-        }
-
         function standardize_color(str){
             var ctx = document.createElement('canvas').getContext('2d');
             ctx.fillStyle = str;
@@ -436,4 +425,13 @@
     <div id="name"></div>
 </body>
 <div id="fireworks"></div>
+<script>
+    var json = getParameterByName("json");
+    try{
+        loadcard(unescape(json));
+    }catch (e){
+        str = `${e}<br><br>&lt;${e.file}&gt; line: ${e.columnNumber}, row: ${e.rowNumber}`
+        location.replace("error.html?error=" + escape(str));
+    }
+</script>
 </html>
